@@ -6,7 +6,7 @@
 
 ## Problem Statement
 
-Sanskrit chanting is not just reading text — it is a **structured rhythmic science (Chandas)**.
+Sanskrit chanting is not just reading text it is a **structured rhythmic science (Chandas)**.
 Most modern tools fail to preserve:
 
 * Correct **Laghu (short) / Guru (long)** syllable timing
