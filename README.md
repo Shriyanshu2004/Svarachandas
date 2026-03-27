@@ -1,19 +1,20 @@
-# Svarachandas
+# 🕉️ Svarachandas
 
-### *Where Sanskrit Meets Sound, Rhythm & AI*
+### *Where Sanskrit Meets Sound, Rhythm & Cinematic AI Experience*
 
 ---
 
 ## Problem Statement
 
-Sanskrit chanting is not just reading text it is a **structured rhythmic science (Chandas)**.
-Most modern tools fail to preserve:
+Sanskrit chanting is not just reading text it is a **precise rhythmic science (Chandas)**.
 
-* Correct **Laghu (short) / Guru (long)** syllable timing
-* Natural **melody and pitch flow**
-* Immersive **spiritual experience**
+However, most modern digital tools fail to preserve:
 
-As a result, digital chanting loses its **authenticity and soul**.
+* ❌ Correct **Laghu (short) / Guru (long)** syllable timing
+* ❌ Natural **melody & pitch flow**
+* ❌ Immersive **spiritual chanting experience**
+
+As a result, digital chanting loses its **authenticity, rhythm, and emotional depth**.
 
 ---
 
@@ -21,42 +22,60 @@ As a result, digital chanting loses its **authenticity and soul**.
 
 **Svarachandas** is an AI-powered system that transforms Sanskrit verses into:
 
-> **Melodic + Rhythmic + Emotionally immersive chants**
+> 🎧 **Melodic + Rhythmic + Visually Immersive Chanting Experience**
 
 It combines:
 
 * Sanskrit **Chandas analysis**
-* AI-driven **melody synthesis**
-* Human-like **voice chanting**
-* Cinematic **temple UI experience**
+* AI-driven **melody & pitch modulation**
+* Human-like **chant generation**
+* Cinematic **Netflix-style UI visualization**
 
 ---
 
 ## Key Features
 
+###Cinematic Sanskrit Experience
+
+* Netflix-style immersive UI
+* Glowing elements, smooth animations, temple aesthetics
+
 ### AI Chant Generation
 
-* Converts Sanskrit text → natural chant audio
+* Converts Sanskrit text → smooth chanting audio
 
-### 🟢 Laghu / 🔴 Guru Intelligence
+### 🟢🔴 Laghu–Guru Visualization
 
-* Detects syllable weight using Sanskrit prosody rules
+* Real-time syllable classification
+* Laghu (short syllable)
+* Guru (long syllable)
 
-### Real-time Rhythm Visualization
+### Animated Rhythm Display
 
-* Syllables animate in sync with chanting beats
+* Pattern visualized using:
 
-### Melody + Pitch System
+  * ◡ = Laghu
+  * — = Guru
+* Styled with glow and spacing for clarity
 
-* Voice follows musical pitch (not robotic TTS)
+###Chandas Intelligence
 
-### Immersive Temple UI
+* Detects syllable weight using Sanskrit rules:
 
-* Diya glow, particles, mantra aura, ambient design
+  * Long vowels (आ, ई, ऊ…)
+  * Consonant clusters
+  * Anusvara (ं) / Visarga (ः)
 
-### Audio Experience
+###Premium UI/UX
 
-* Smooth, continuous, non-breaking chanting
+* Glassmorphism cards
+* Hover animations
+* Temple-themed background
+
+### 🔊 Seamless Audio Experience
+
+* Continuous chanting (no breaks)
+* Pitch-aware audio synthesis
 
 ---
 
@@ -65,22 +84,52 @@ It combines:
 ```text
 User Input (Sanskrit Shloka)
         ↓
-Phonetic Conversion (IAST)
+Text Processing & Cleaning
         ↓
 Syllable Segmentation
         ↓
-Laghu-Guru Detection
+Laghu–Guru Detection
         ↓
-Duration Mapping (Rhythm)
+Rhythm Mapping
         ↓
-Melody Generation (Pitch Curve)
+Audio Generation (gTTS)
         ↓
-Voice Synthesis (gTTS)
+Pitch Adjustment + Processing
         ↓
-Pitch Modulation + Audio Merge
-        ↓
-Final Chant Output + UI Sync
+Final Chant Output + Visual Display
 ```
+
+---
+
+## 🧪 Example Output
+
+**Input:**
+
+```
+यदा यदा हि धर्मस्य ग्लानिर्भवति भारत।
+```
+
+**System Output:**
+
+* 🎧 Chant Audio
+
+* 📜 Sanskrit Verse Display
+
+* Syllable Split:
+  `ya | da | ya | da | hi | dhar | ma | sya | ...`
+
+* 🟢🔴 Laghu–Guru Pattern:
+  `◡ — ◡ — — ◡ ◡ — ...`
+
+---
+
+## Innovation & Uniqueness
+
+✔ Combines **ancient Sanskrit prosody + modern AI**
+✔ Provides **visual + auditory rhythm synchronization**
+✔ Netflix-style **immersive chanting interface**
+✔ Moves beyond TTS → **true chant experience**
+✔ Focus on **authenticity + aesthetics + spirituality**
 
 ---
 
@@ -100,70 +149,42 @@ Final Chant Output + UI Sync
 
 ```
 Svarachandas/
-│── app.py                 # Main UI + Interaction
+│── app.py
 │── requirements.txt
 │
 ├── utils/
-│   ├── audio_engine.py   # Voice + melody synthesis
-│   ├── melody.py         # Pitch generation logic
-│   ├── text_processing.py# IAST + syllables
-│   ├── chandas.py        # Laghu/Guru detection
+│   ├── audio_engine.py
+│   ├── melody.py
+│   ├── text_processing.py
+│   ├── chandas.py
 │
 ├── assets/
-│   └── bg.jpg            # Temple background
+│   └── bg.jpg
 ```
 
 ---
 
-## ⚙️ Setup Instructions
-
-###Download Project
-
-1. Click the green **Code** button on GitHub  
-2. Select **Download ZIP**  
-3. Extract the ZIP file  
-
-### Run the Application
+## Setup Instructions
 
 ```bash
-cd Svarachandas
+# Step 1: Download project (ZIP or clone)
+# Step 2: Open terminal inside folder
+
 pip install -r requirements.txt
+
+# Step 3: Run app
 streamlit run app.py
+```
 
 ---
 
-##Demo Video
+## Demo Video
 
 👉 *(Add your 2-minute hackathon demo link here)*
 
 ---
 
-##Example Output
-
-**Input:**
-
-```
-विद्या ददाति विनयं
-```
-
-**System Output:**
-
-* Melodic Chant Audio
-* 🟢🔴 Laghu-Guru Visualization
-* Animated Rhythm Sync
-
----
-
-## Innovation & Uniqueness
-
-✔ Combines **ancient Sanskrit metrics + modern AI audio**
-✔ First system to provide **visual + auditory rhythm sync**
-✔ Moves beyond TTS → **true chant experience**
-✔ Focuses on **authenticity, not just generation**
-
----
-
-## Hackathon Compliance
+## 📌 Hackathon Compliance
 
 * Developed during hackathon period
 * Uses open-source tools (gTTS, librosa, etc.)
@@ -178,7 +199,7 @@ streamlit run app.py
 This project uses AI-based tools and libraries:
 
 * **gTTS** → text-to-speech generation
-* **Signal processing libraries** → pitch and rhythm modulation
+* **Signal processing libraries** → pitch & rhythm modulation
 
 No proprietary or restricted models are used.
 
@@ -188,21 +209,22 @@ No proprietary or restricted models are used.
 
 * Real-time voice chanting input
 * Raaga-based chanting system
-* 3D Temple (Three.js / WebGL)
+* 3D Temple (WebGL / Three.js)
 * Meditation + chanting mode
 * Multi-language sacred text support
 
 ---
 
-##Team 
+## Team
+Shriyanshu Rout Ray
+Sugnan Murthy G M
 
-**Shriyanshu Rout Ray
-Sugnan Murthy G M **
+
 
 ---
 
-## Final Thought
+##  Final Thought
 
-> *“Svarachandas is not just an app it is an attempt to digitize the soul of Sanskrit chanting.”*
+> *“Svarachandas is not just an app — it is an attempt to digitize the soul of Sanskrit chanting.”*
 
 
