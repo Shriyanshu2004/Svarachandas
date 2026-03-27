@@ -1,29 +1,27 @@
-def laghu_guru(syllables):
-    long_vowels = ["ā", "ī", "ū", "e", "o"]
-    result = []
+# utils/chandas.py
 
-    for syl in syllables:
-        if any(v in syl for v in long_vowels):
-            result.append("G")
-        elif syl.endswith(('ṃ', 'ḥ')):
-            result.append("G")
-        else:
-            result.append("L")
+def analyze_laghu_guru(text):
 
-    return result
+    if not text.strip():
+        return [], []
 
+    words = text.split()
 
-def get_durations(pattern):
-    durations = []
+    syllables = []
+    pattern = []
 
-    for i, p in enumerate(pattern):
-        if p == "L":
-            durations.append(400)
-        else:
-            durations.append(700)
+    for word in words:
 
-        # pause after each 8 syllables (like shloka)
-        if i % 8 == 7:
-            durations[-1] += 300
+        # Split into small chunks (safe syllable fallback)
+        parts = [word[i:i+2] for i in range(0, len(word), 2)]
 
-    return durations
+        for p in parts:
+            syllables.append(p)
+
+            # Simple Guru rule
+            if any(v in p for v in ["ा","ी","ू","े","ो","ai","au"]):
+                pattern.append("G")
+            else:
+                pattern.append("L")
+
+    return syllables, pattern
