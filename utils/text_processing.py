@@ -1,11 +1,24 @@
-from indic_transliteration import sanscript
-from indic_transliteration.sanscript import transliterate
-import re
+# utils/text_processing.py
 
-def to_iast(text):
-    return transliterate(text, sanscript.DEVANAGARI, sanscript.IAST)
+# Basic Sanskrit cleaner + transliteration (safe fallback)
 
-def syllabify(text):
-    vowels = "aāiīuūeēoōṛ"
-    pattern = r'[^{}]*[{}]+'.format(vowels, vowels)
-    return re.findall(pattern, text)
+def clean_sanskrit(text):
+    if not text:
+        return ""
+    return text.strip()
+
+
+def transliterate_iast(text):
+    """
+    Simple fallback transliteration.
+    (You can upgrade later using indic-transliteration)
+    """
+    return text.lower()
+
+
+def process_text(text):
+    """
+    Main pipeline function
+    """
+    text = clean_sanskrit(text)
+    return transliterate_iast(text)
