@@ -179,6 +179,8 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+Tested on Python 3.12+
+
 ---
 
 ## Demo Video
