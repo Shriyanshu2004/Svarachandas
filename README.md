@@ -165,6 +165,9 @@ Svarachandas/
 ---
 
 ## Setup Instructions
+Install FFmpeg before running:
+https://ffmpeg.org/download.html
+and put in your environment variable path
 
 ```bash
 # Step 1: Download project (ZIP or clone)
