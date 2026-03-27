@@ -1,0 +1,8 @@
+streamlit==1.32.2
+edge-tts==6.1.10
+pydub==0.25.1
+numpy==1.26.4
+scipy==1.11.4
+sounddevice==0.4.6
+SpeechRecognition==3.10.1
+indic-transliteration==2.3.44
