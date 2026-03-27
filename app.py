@@ -4,231 +4,248 @@ st.set_page_config(
     page_icon="🕉️",
 )
 import base64
-import json
-
 from utils.audio_engine import generate_audio_real_pitch
-from utils.text_processing import to_iast, syllabify
-from utils.chandas import laghu_guru, get_durations
 
-# -------- LOAD BG --------
+# ---------- LOAD BG ----------
 def get_base64(file):
     with open(file, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
 bg = get_base64("assets/bg.jpg")
 
-# -------- UI --------
+st.set_page_config(layout="wide")
+
+# ---------- CSS ----------
 st.markdown(f"""
 <style>
 
 /* BACKGROUND */
 .stApp {{
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.95)),
-                url("data:image/jpg;base64,{bg}");
+    background:
+    linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+    url("data:image/jpg;base64,{bg}");
     background-size: cover;
-    background-position: center;
     background-attachment: fixed;
-}}
-
-/* PARTICLES */
-.particles {{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}}
-
-.particles span {{
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: gold;
-    border-radius: 50%;
-    animation: float 10s linear infinite;
-}}
-
-@keyframes float {{
-    0% {{ transform: translateY(100vh); opacity: 0; }}
-    50% {{ opacity: 1; }}
-    100% {{ transform: translateY(-10vh); opacity: 0; }}
-}}
-
-/* CENTER */
-.container {{
-    text-align: center;
-    margin-top: 80px;
-}}
-
-/* MANTRA */
-.mantra {{
-    font-size: 26px;
-    color: gold;
-    animation: pulse 2.5s infinite;
-}}
-
-@keyframes pulse {{
-    0% {{ opacity: 0.6; }}
-    50% {{ opacity: 1; }}
-    100% {{ opacity: 0.6; }}
-}}
-
-/* DIYA */
-.diya {{
-    width: 20px;
-    height: 40px;
-    margin: 20px auto;
-    background: radial-gradient(circle, yellow, orange, red);
-    border-radius: 50%;
-    box-shadow: 0 0 40px orange, 0 0 80px gold;
-    animation: flicker 0.15s infinite alternate;
-}}
-
-@keyframes flicker {{
-    from {{ transform: scale(1); }}
-    to {{ transform: scale(1.15); }}
 }}
 
 /* TITLE */
 .title {{
-    font-size: 48px;
-    color: gold;
-    text-shadow: 0 0 20px orange;
+    text-align:center;
+    font-size:70px;
+    color:gold;
+    font-weight:bold;
+    text-shadow:0 0 60px orange;
+    margin-top:30px;
+}}
+
+.subtitle {{
+    text-align:center;
+    color:#ccc;
+    font-size:20px;
+    margin-bottom:30px;
+}}
+
+/* DIYA */
+.diya {{
+    width:30px;
+    height:50px;
+    margin:20px auto;
+    background: radial-gradient(circle, yellow, orange, red);
+    border-radius:50%;
+    box-shadow:0 0 80px orange,0 0 120px gold;
+    animation:flicker 0.12s infinite alternate;
+}}
+
+@keyframes flicker {{
+    from {{transform:scale(1);}}
+    to {{transform:scale(1.25);}}
+}}
+
+/* CARDS */
+.card {{
+    background: rgba(255,255,255,0.05);
+    padding:25px;
+    border-radius:20px;
+    backdrop-filter: blur(12px);
+    box-shadow:0 0 30px rgba(255,165,0,0.2);
+    transition:0.4s;
+    height:100%;
+}}
+
+.card:hover {{
+    transform:scale(1.05);
+    box-shadow:0 0 60px gold;
+}}
+
+.card h3 {{
+    color:gold;
+}}
+
+.card p {{
+    color:#ddd;
+    line-height:1.6;
 }}
 
 /* INPUT */
 textarea {{
-    background: rgba(0,0,0,0.7) !important;
-    color: white !important;
-    border-radius: 10px !important;
-    border: 1px solid orange !important;
+    background: rgba(0,0,0,0.85) !important;
+    color:white !important;
+    border-radius:15px !important;
+    border:1px solid gold !important;
+    padding:15px !important;
+    font-size:18px !important;
 }}
 
 /* BUTTON */
 .stButton>button {{
-    background: linear-gradient(45deg, orange, gold);
-    color: black;
-    border-radius: 30px;
-    padding: 12px 28px;
-    border: none;
-    box-shadow: 0 0 20px orange;
+    background:linear-gradient(45deg,orange,gold);
+    color:black;
+    border-radius:30px;
+    padding:14px 40px;
+    font-size:20px;
+    box-shadow:0 0 30px orange;
 }}
 
 .stButton>button:hover {{
-    transform: scale(1.1);
-}}
-
-/* SYLLABLE VISUALIZER */
-.syllable {{
-    display: inline-block;
-    padding: 6px 10px;
-    margin: 4px;
-    border-radius: 8px;
-    font-size: 20px;
-    background: rgba(255,255,255,0.05);
-    transition: 0.3s;
-}}
-
-.laghu {{
-    color: #00ff88;
-}}
-
-.guru {{
-    color: #ff4d4d;
-}}
-
-.active {{
-    background: gold !important;
-    color: black !important;
-    transform: scale(1.3);
-    box-shadow: 0 0 20px gold;
-}}
-
-@keyframes wave {{
-    0% {{ transform: translateY(0px); }}
-    50% {{ transform: translateY(-10px); }}
-    100% {{ transform: translateY(0px); }}
-}}
-
-.wave {{
-    animation: wave 1s infinite;
+    transform:scale(1.1);
+    box-shadow:0 0 60px gold;
 }}
 
 </style>
-
-<!-- PARTICLES -->
-<div class="particles">
-    {"".join([f'<span style="left:{i*5}%"></span>' for i in range(20)])}
-</div>
-
-<!-- MAIN -->
-<div class="container">
-    <div class="mantra">ॐ नमः शिवाय</div>
-    <div class="diya"></div>
-    <div class="title">🕉️ Svarachandas</div>
-</div>
-
 """, unsafe_allow_html=True)
 
-# -------- INPUT --------
-text = st.text_area("", placeholder="Enter Sanskrit Shloka...", height=120)
+# ---------- HEADER ----------
+st.markdown('<div class="title">🕉️ Svarachandas</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">AI-Powered Sanskrit Chanting • Rhythm • Melody</div>', unsafe_allow_html=True)
+st.markdown('<div class="diya"></div>', unsafe_allow_html=True)
 
-# -------- BUTTON --------
+# ---------- INFO CARDS ----------
+st.markdown("<br>", unsafe_allow_html=True)
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="card">
+    <h3>📜 Chandas</h3>
+    <p>
+    Chandas is the ancient science of Sanskrit poetic meter.
+    It governs the rhythmic structure of verses.
+    </p>
+    <p>
+    Each verse follows a precise pattern of syllables,
+    creating musical flow and spiritual resonance.
+    </p>
+    <p>
+    Examples:
+    <br>• Gayatri
+    <br>• Anushtubh
+    <br>• Trishtubh
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="card">
+    <h3>🟢 Laghu & 🔴 Guru</h3>
+    <p>
+    🟢 Laghu = Short syllable (1 beat)<br>
+    🔴 Guru = Long syllable (2 beats)
+    </p>
+    <p>
+    Guru occurs when:
+    <br>• Long vowels (आ, ई, ऊ)
+    <br>• Consonant clusters
+    <br>• Anusvara (ं) / Visarga (ः)
+    </p>
+    <p>
+    This pattern defines rhythm in chanting.
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="card">
+    <h3>🚀 Experience</h3>
+    <p>
+    Svarachandas transforms text into:
+    </p>
+    <p>
+    🎧 Chant Audio<br>
+    🎼 Melody Flow<br>
+    🧠 Rhythm Intelligence<br>
+    ✨ Visual Feedback
+    </p>
+    <p>
+    Not just TTS — a spiritual audio experience.
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ---------- INPUT ----------
+st.markdown("<br><br>", unsafe_allow_html=True)
+text = st.text_area("", placeholder="Enter Sanskrit Shloka...", height=140)
+
+# ---------- LOGIC ----------
+def split_simple(text):
+    words = text.split()
+    syllables = []
+    for w in words:
+        parts = [w[i:i+2] for i in range(0, len(w), 2)]
+        syllables.extend(parts)
+    return syllables
+
+def get_pattern(syllables):
+    pattern = []
+    for s in syllables:
+        if any(v in s for v in ["ा","ी","ू","े","ो"]):
+            pattern.append("G")
+        else:
+            pattern.append("L")
+    return pattern
+
+# ---------- BUTTON ----------
 if st.button("🔔 Generate Divine Chant"):
 
-    # 🎧 AUDIO
-    audio = generate_audio_real_pitch(text)
-    st.audio(audio)
+    if text.strip():
 
-    try:
-        # 🧠 CHANDAS AFTER CLICK
-        iast = to_iast(text)
-        syllables = syllabify(iast)
-        pattern = laghu_guru(syllables)
-        durations = get_durations(pattern)
+        audio = generate_audio_real_pitch(text)
+        st.audio(audio)
 
-        # 🎨 BUILD UI
-        html = ""
-        for i, (syl, p) in enumerate(zip(syllables, pattern)):
-            cls = "laghu" if p == "L" else "guru"
-            html += f'<span id="syl{i}" class="syllable {cls}">{syl}</span>'
+        syllables = split_simple(text)
+        pattern = get_pattern(syllables)
 
-        st.markdown(html, unsafe_allow_html=True)
+        # TEXT
+        st.markdown(f"""
+        <div style="font-size:30px; color:white; text-align:center; margin-top:30px;">
+        {text}
+        </div>
+        """, unsafe_allow_html=True)
 
-        # 🔥 SYNC JS (NO ERROR VERSION)
-        js = f"""
-        <script>
-        const durations = {json.dumps(durations)};
-        let index = 0;
+        # SPLIT
+        split_line = " | ".join(syllables)
 
-        function animate() {{
-            for (let i = 0; i < durations.length; i++) {{
-                let el = document.getElementById("syl"+i);
-                if (el) el.classList.remove("active","wave");
-            }}
+        st.markdown(f"""
+        <div style="font-size:22px; color:#ddd; text-align:center; margin-top:20px;">
+        {split_line}
+        </div>
+        """, unsafe_allow_html=True)
 
-            let el = document.getElementById("syl"+index);
-            if (el) el.classList.add("active","wave");
+        # PATTERN
+        st.markdown("<h3 style='text-align:center; margin-top:25px;'>Laghu–Guru Pattern</h3>", unsafe_allow_html=True)
 
-            index++;
-            if (index >= durations.length) index = 0;
-        }}
+        pattern_html = "<div style='text-align:center; font-size:30px;'>"
 
-        function start() {{
-            let t = 0;
-            durations.forEach(function(d,i) {{
-                setTimeout(function() {{
-                    index = i;
-                    animate();
-                }}, t);
-                t += d;
-            }});
-        }}
+        for p in pattern:
+            if p == "L":
+                pattern_html += "<span style='color:#00ff88; margin:6px;'>◡</span>"  # GREEN Laghu
+            else:
+                pattern_html += "<span style='color:#ff4d4d; margin:6px;'>—</span>"  # RED Guru
 
-        setTimeout(start, 1200);
-        </script>
-        """
+        pattern_html += "</div>"
 
-        st.components.v1.html(js, height=0)
+        st.markdown(pattern_html, unsafe_allow_html=True)
 
-    except:
-        st.warning("⚠️ Could not process chandas")
+    else:
+        st.warning("Please enter a shloka 🙏")
